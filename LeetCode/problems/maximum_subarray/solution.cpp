@@ -5,13 +5,13 @@ public:
         int sum = 0, maxSum = INT_MIN;
         for(int i=0; i<n; i++)
         {
-            int temp = sum;
+            // int temp = sum;
             sum += nums[i];
             maxSum = max(maxSum,sum);
             if(sum<0)
             {
-                if(temp!=0)
-                maxSum = max(maxSum,temp);
+                // if(temp!=0)
+                // maxSum = max(maxSum,temp);
                 sum = 0;
             }
         }
