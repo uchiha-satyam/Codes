@@ -4,6 +4,11 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 8 * * *"
+    
+permissions:
+  contents: write
+  actions: write
+  deployments: write
 
 jobs:
   build:
