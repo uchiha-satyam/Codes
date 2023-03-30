@@ -28,7 +28,7 @@ public:
                 if(s.top()==b[p2])
                 {
                     s.pop();
-                    o.erase(b[p2]);
+                    // o.erase(b[p2]);
                     p2++;
                 }
                 else
