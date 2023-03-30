@@ -28,6 +28,7 @@ public:
 
 
 // } Driver Code Ends
+
 class Solution {
   public:
     int minimumInteger(int n, vector<int> &A) {
