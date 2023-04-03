@@ -53,13 +53,20 @@ you are required to complete the below method */
 void SortedStack :: sort()
 {
     //Your code here
-    vector<int> v;
-    while(!s.empty())
+    if(s.empty()) return;
+    int v = s.top();
+    s.pop();
+    sort();
+    stack<int> temp;
+    while(!s.empty()&&s.top()>v)
     {
-        v.push_back(s.top());
+        temp.push(s.top());
         s.pop();
     }
-    std::sort(v.begin(),v.end());
-    for(int i=0; i<v.size(); i++)
-    s.push(v[i]);
+    s.push(v);
+    while(!temp.empty())
+    {
+        s.push(temp.top());
+        temp.pop();
+    }
 }
