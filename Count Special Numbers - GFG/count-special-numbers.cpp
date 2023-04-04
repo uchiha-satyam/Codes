@@ -10,7 +10,6 @@ using namespace std;
 class Solution {
   public:
     int countSpecialNumbers(int N, vector<int> arr) {
-        // Code here
         int ans = 0;
         map<int,int> mp;
         for(int i=0; i<N; i++)
