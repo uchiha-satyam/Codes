@@ -3,6 +3,37 @@
 using namespace std;
 #define ll long long
 
+// } Driver Code Ends
+class Solution
+{
+    public:
+        void Rearrange(int arr[], int n)
+        {
+            // Your code goes here
+            int p1=0, p2=0;
+            int temp[n];
+            for(int i=0; i<n; i++)
+            {
+                temp[i] = arr[i];
+                if(arr[i]<0) p2++;
+            }
+            for(int i=0; i<n; i++)
+            {
+                if(temp[i]<0)
+                {
+                    arr[p1] = temp[i];
+                    p1++;
+                }
+                else
+                {
+                    arr[p2] = temp[i];
+                    p2++;
+                }
+            }
+        }
+};
+
+//{ Driver Code Starts.
 void Rearrange(int arr[], int n);
 
 int main() 
@@ -17,8 +48,8 @@ int main()
         for(int i=0;i<n;i++)
         cin>>arr[i];
         long long j=0;
-      
-        Rearrange( arr, n);
+        Solution ob;
+        ob.Rearrange(arr, n);
       
         for (int i = 0; i < n; i++) 
             cout << arr[i] << " "; 
@@ -27,30 +58,3 @@ int main()
     return 0; 
 } 
 // } Driver Code Ends
-
-void dosomething(int arr[], int l, int r)
-{
-    if(l>=r) return;
-    int neg = 0;
-    for(int i=l; i<=r; i++)
-    {
-        if(arr[i]<0) neg++;
-    }
-    if(neg==0||neg==r-l+1) return;
-    dosomething(arr,l,l+neg-1);
-    dosomething(arr,l+neg,r);
-    int p = l+neg;
-    for(int i=l; i<l+neg; i++)
-    {
-        if(arr[i]>=0)
-        {
-            swap(arr[i],arr[p]);
-            p++;
-        }
-    }
-}
-void Rearrange(int arr[], int n)
-{
-    // Your code goes here
-    dosomething(arr,0,n-1);
-}
