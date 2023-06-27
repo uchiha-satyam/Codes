@@ -9,15 +9,22 @@ public:
         vector<int> v(n);
         for(int i=0; i<n; i++)
             v[i] = i;
+        vector<int> remove;
         for(auto& x : st)
         {
             if(x.first!=prev)
             {
                 prev = x.first;
-                sort(v.begin(),v.end());
+                int err = 0;
+                for(auto& t : remove)
+                {
+                    v.erase(v.begin() + t - err);
+                    err++;
+                }
+                remove.clear();
             }
             people[v[x.second]] = {x.first,x.second};
-            v[x.second] = INT_MAX;
+            remove.push_back(x.second);
         }
         return people;
     }
