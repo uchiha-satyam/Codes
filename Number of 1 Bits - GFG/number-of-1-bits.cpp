@@ -10,7 +10,7 @@ class Solution {
         int c = 0;
         while(N>0)
         {
-            c += N%2;
+            if(N%2) c++;
             N = N>>1;
         }
         return c;
