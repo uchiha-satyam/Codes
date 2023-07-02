@@ -15,8 +15,8 @@ public:
     int change(int amount, vector<int>& coins) {
         sort(coins.begin(),coins.end());
         int n = coins.size();
-        vector<vector<int>> dp(amount+1,vector<int>(n,-1));
-        return help(coins,amount,0,n,dp);
+        vector<vector<int>> dp(amount+1,vector<int>(n,0));
+        // return help(coins,amount,0,n,dp);
         for(int i=0; i<n; i++)
             dp[0][i] = 1;
         for(int i=1; i<=amount; i++)
