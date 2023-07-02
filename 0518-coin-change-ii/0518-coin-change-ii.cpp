@@ -19,14 +19,26 @@ public:
         // return help(coins,amount,0,n,dp);
         for(int i=0; i<n; i++)
             dp[0][i] = 1;
+        int sum = -1;
         for(int i=1; i<=amount; i++)
         {
+            sum = -1;
             for(int j=0; j<n; j++)
             {
-                for(int k=j; k<n; k++)
+                if(sum!=-1)
                 {
-                    if(i-coins[k]<0) break;
-                    dp[i][j] += dp[i-coins[k]][k];
+                    if(i-coins[j-1]<0) break;;
+                    dp[i][j] = sum - dp[i-coins[j-1]][j-1];
+                    sum = dp[i][j];
+                }
+                else
+                {
+                    for(int k=j; k<n; k++)
+                    {
+                        if(i-coins[k]<0) break;
+                        dp[i][j] += dp[i-coins[k]][k];
+                    }
+                    sum = dp[i][j];
                 }
             }
         }
