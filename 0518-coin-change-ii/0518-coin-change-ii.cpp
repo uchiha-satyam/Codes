@@ -17,5 +17,19 @@ public:
         int n = coins.size();
         vector<vector<int>> dp(amount+1,vector<int>(n,-1));
         return help(coins,amount,0,n,dp);
+        for(int i=0; i<n; i++)
+            dp[0][i] = 1;
+        for(int i=1; i<=amount; i++)
+        {
+            for(int j=0; j<n; j++)
+            {
+                for(int k=j; k<n; k++)
+                {
+                    if(i-coins[k]<0) break;
+                    dp[i][j] += dp[i-coins[k]][k];
+                }
+            }
+        }
+        return dp[amount][0];
     }
 };
