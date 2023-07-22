@@ -41,26 +41,24 @@ class Solution
 {
     public:
     //Function to remove duplicates from unsorted linked list.
-    Node * removeDuplicates( Node *head) 
+    Node *removeDuplicates(Node *head) 
     {
         // your code goes here
-        Node* h=head, * t=NULL, * curr=head;
-        unordered_set<int> s;
-        while(curr)
+        unordered_set<int> st;
+        Node *prev = NULL, *curr = head;
+        while(curr!=NULL)
         {
-            if(!s.count(curr->data))
+            if(st.count(curr->data))
             {
-                if(t)
-                {
-                    t->next = curr;
-                    t = curr;
-                }
-                else t = curr;
-                s.insert(curr->data);
+                prev->next = curr->next;
+                delete curr;
+                curr = prev->next;
+                continue;
             }
+            st.insert(curr->data);
+            prev = curr;
             curr = curr->next;
         }
-        t->next = NULL;
         return head;
     }
 };
