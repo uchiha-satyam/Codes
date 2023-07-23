@@ -31,28 +31,25 @@ struct Node *start = NULL;
 */
 class Solution
 {
-    static bool comp(Node* h1, Node* h2)
-    {
-        return h1->data<h2->data;
-    }
     public:
     //Function to sort a linked list of 0s, 1s and 2s.
+    static bool comp(Node* n1, Node* n2)
+    {
+        return n1->data<n2->data;
+    }
     Node* segregate(Node *head) {
         // Add code here
-        vector<Node*> v;
+        vector<Node*> vec;
         while(head)
         {
-            v.push_back(head);
+            vec.push_back(head);
             head = head->next;
         }
-        sort(v.begin(),v.end(),comp);
-        head = v[0];
-        for(int i=0; i<v.size(); i++)
-        {
-            if(i==v.size()-1) v[i]->next = NULL;
-            else v[i]->next = v[i+1];
-        }
-        return head;
+        sort(vec.begin(),vec.end(),this->comp);
+        for(int i=0; i<vec.size()-1; i++)
+        vec[i]->next = vec[i+1];
+        vec.back()->next = NULL;
+        return vec[0];
     }
 };
 
