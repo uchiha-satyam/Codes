@@ -13,25 +13,22 @@ class Solution
         // Code here
         vector<int> dist(V,INT_MAX);
         dist[S] = 0;
-        int mv=0, mn=S;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        pq.push(make_pair(0,S));
         vector<bool> visited(V,false);
-        while(mv!=INT_MAX)
+        while(!pq.empty())
         {
-            visited[mn] = true;
-            for(auto& x : adj[mn])
+            pair<int,int> n = pq.top();
+            pq.pop();
+            if(visited[n.second]) continue;
+            visited[n.second] = true;
+            for(auto& x : adj[n.second])
             {
-                if(x[1]+mv<dist[x[0]])
+                if(visited[x[0]]) continue;
+                if(n.first + x[1] < dist[x[0]])
                 {
-                    dist[x[0]] = x[1] + mv;
-                }
-            }
-            mv = INT_MAX;
-            for(int i=0; i<V; i++)
-            {
-                if(!visited[i] && dist[i]<mv)
-                {
-                    mv = dist[i];
-                    mn = i;
+                    dist[x[0]] = n.first + x[1];
+                    pq.push(make_pair(dist[x[0]],x[0]));
                 }
             }
         }
