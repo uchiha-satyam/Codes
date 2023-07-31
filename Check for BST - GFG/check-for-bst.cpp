@@ -21,20 +21,27 @@ struct Node {
 // } Driver Code Ends
 class Solution
 {
-    bool check(Node* root, int mi, int ma)
+    public:
+    bool traverse(Node* root, int& m)
     {
         if(root==NULL) return true;
-        if(root->data<=mi||root->data>=ma) return false;
-        return check(root->left,mi,root->data)&&check(root->right,root->data,ma);
+        if(!traverse(root->left,m)) return false;
+        if(root->data<=m) return false;
+        m = root->data;
+        if(!traverse(root->right,m)) return false;
+        return true;
     }
-    public:
     //Function to check whether a Binary Tree is BST or not.
     bool isBST(Node* root) 
     {
         // Your code here
-        return check(root,INT_MIN,INT_MAX);
+        int m = INT_MIN;
+        return traverse(root,m);
     }
 };
+
+
+
 
 //{ Driver Code Starts.
 
