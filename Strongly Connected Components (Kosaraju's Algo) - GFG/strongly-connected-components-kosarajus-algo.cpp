@@ -5,41 +5,41 @@ using namespace std;
 // } Driver Code Ends
 class Solution
 {
+    void dfs(vector<vector<int>>& adj, vector<bool>& visited, int n, stack<int>& st, vector<vector<int>>& newAdj)
+    {
+        visited[n] = true;
+        for(auto& x : adj[n])
+        {
+            newAdj[x].push_back(n);
+            if(visited[x]) continue;
+            dfs(adj,visited,x,st,newAdj);
+        }
+        st.push(n);
+    }
 	public:
-	void dfs(vector<vector<int>>& adj, vector<bool>& visited, stack<int>& st, int curr, vector<vector<int>>& adjT)
-	{
-	    if(visited[curr]) return;
-	    visited[curr] = true;
-	    for(auto& n : adj[curr])
-	    {
-	        adjT[n].push_back(curr);
-	        dfs(adj,visited,st,n,adjT);
-	    }
-	    st.push(curr);
-	}
 	//Function to find number of strongly connected components in the graph.
     int kosaraju(int V, vector<vector<int>>& adj)
     {
         //code here
         stack<int> st, temp;
+        vector<vector<int>> newAdj(V);
         vector<bool> visited(V,false);
-        vector<vector<int>> adjT(V);
         for(int i=0; i<V; i++)
         {
             if(visited[i]) continue;
-            dfs(adj,visited,st,i,adjT);
+            dfs(adj,visited,i,st,newAdj);
         }
+        int ans = 0;
         visited = vector<bool>(V,false);
-        int c = 0;
         while(!st.empty())
         {
             int n = st.top();
             st.pop();
             if(visited[n]) continue;
-            c++;
-            dfs(adjT,visited,temp,n,adj);
+            ans++;
+            dfs(newAdj,visited,n,temp,adj);
         }
-        return c;
+        return ans;
     }
 };
 
