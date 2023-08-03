@@ -8,31 +8,21 @@ using namespace std;
 //User function template for C++
 
 class Solution{
-  public:
-    
+    public:
     string longestCommonPrefix (string arr[], int N)
     {
         // your code here
-        string ans = "";
-        int j = 0;
-        int f = 1;
-        while(true)
+        for(int i=1; i<N; i++)
         {
-            char c = arr[0][j];
-            for(int i=0; i<N; i++)
+            arr[0] = arr[0].substr(0,min(arr[0].size(),arr[i].size()));
+            for(int j=0; j<arr[0].size(); j++)
+            if(arr[0][j]!=arr[i][j])
             {
-                if(arr[i].length()<j||arr[i][j]!=c)
-                {
-                    f = 0;
-                    break;
-                }
+                arr[0] = arr[0].substr(0,j);
+                break;
             }
-            if(f==0) break;
-            ans += c;
-            j++;
         }
-        if(ans=="") ans = "-1";
-        return ans;
+        return (arr[0]=="") ? "-1" : arr[0];
     }
 };
 
