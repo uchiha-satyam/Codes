@@ -4,28 +4,28 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-  public:
-    // Function to detect cycle in a directed graph.
-    bool check(vector<int> adj[], int v, int c, vector<bool>& v1, vector<bool>& v2)
+    public:
+    bool dfs(vector<int> adj[], vector<bool>& univ, vector<bool>& local, int n)
     {
-        v1[c] = true;
-        v2[c] = true;
-        for(auto& x : adj[c])
+        univ[n] = true;
+        local[n] = true;
+        for(auto& x : adj[n])
         {
-            if(v2[x]) return true;
-            if(v1[x]) continue;
-            if(check(adj,v,x,v1,v2)) return true;
+            if(local[x]) return true;
+            if(univ[x]) continue;
+            if(dfs(adj,univ,local,x)) return true;
         }
-        v2[c] = false;
+        local[n] = false;
         return false;
     }
+    // Function to detect cycle in a directed graph.
     bool isCyclic(int V, vector<int> adj[]) {
         // code here
-        vector<bool> v1(V,false), v2(V,false);
+        vector<bool> univ(V,false), local(V,false);
         for(int i=0; i<V; i++)
         {
-            if(v1[i]) continue;
-            if(check(adj,V,i,v1,v2)) return true;
+            if(univ[i]) continue;
+            if(dfs(adj,univ,local,i)) return true;
         }
         return false;
     }
