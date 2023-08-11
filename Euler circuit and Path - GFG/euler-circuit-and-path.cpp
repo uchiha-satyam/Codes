@@ -7,10 +7,9 @@ class Solution {
 public:
 	int isEularCircuit(int V, vector<int> adj[]){
 	    // Code here
-	    int o=0, e=0;
+	    int o=0;
 	    for(int i=0; i<V; i++)
 	    if(adj[i].size()%2) o++;
-	    else e++;
 	    if(o==0) return 2;
 	    if(o<=2) return 1;
 	    return 0;
