@@ -11,20 +11,15 @@ class Solution{
     bool find3Numbers(int A[], int n, int X)
     {
         //Your Code Here
-        unordered_map<int,int> s;
+        sort(A,A+n);
         for(int i=0; i<n; i++)
         {
-            s[A[i]]++;
-        }
-        for(int i=0; i<n; i++)
-        {
+            unordered_set<int> st;
             for(int j=i+1; j<n; j++)
             {
-                int a = A[i];
-                int b = A[j];
-                int c = X-a-b;
-                int rep = (a==c) + (b==c);
-                if(s.count(c)&&s[c]-rep>0) return true;
+                int k = X - A[i] - A[j];
+                if(st.count(k)) return true;
+                st.insert(A[j]);
             }
         }
         return false;
