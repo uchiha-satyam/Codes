@@ -6,19 +6,22 @@ using namespace std;
 // } Driver Code Ends
 class Solution
 {
-        void makePi(vector<int>& pi, string& pat)
+        void makePi(string& s, vector<int>& pi)
         {
-            int n = pat.size();
+            int n = s.size();
             for(int i=1; i<n; i++)
             {
                 int j = pi[i-1];
-                while(j!=pi[j]&&pat[i]!=pat[j])
+                while(j!=pi[j]&&s[i]!=s[j])
                 j = pi[j];
-                if(pat[i]==pat[j])
-                pi[i] = j+1;
+                if(s[i]==s[j])
+                {
+                    j++;
+                    pi[i] = j;
+                }
             }
         }
-        void kmp(vector<int>& pi, string& pat, string& txt, vector<int>& ans)
+        void kmp(string& txt, string& pat, vector<int>& pi, vector<int>& ans)
         {
             int n = txt.size(), m = pat.size();
             int i = 0, j = 0;
@@ -38,20 +41,23 @@ class Solution
                 else
                 {
                     if(j!=pi[j]) j = pi[j];
-                    else i++,j=0;
+                    else
+                    {
+                        j = 0;
+                        i++;
+                    }
                 }
             }
         }
     public:
-        vector<int> search(string pat, string txt)
+        vector <int> search(string pat, string txt)
         {
             //code here.
             int n = txt.size(), m = pat.size();
             vector<int> pi(m,0);
-            makePi(pi,pat);
-            // return pi;
+            makePi(pat,pi);
             vector<int> ans;
-            kmp(pi,pat,txt,ans);
+            kmp(txt,pat,pi,ans);
             return ans;
         }
      
