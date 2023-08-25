@@ -21,53 +21,24 @@ class Solution
     {
         // code here
         if(low>=high) return;
-        int p = partition(arr,low,high);
-        quickSort(arr,low,p);
-        quickSort(arr,p+1,high);
-        int temp[high-low+1];
-        int p1=low, p2=p+1;
-        int pos=0;
-        while(pos<high-low+1)
-        {
-            if(p1<=p&&p2<=high)
-            {
-                if(arr[p1]<arr[p2])
-                {
-                    temp[pos] = arr[p1];
-                    p1++;
-                }
-                else
-                {
-                    temp[pos] = arr[p2];
-                    p2++;
-                }
-            }
-            else if(p1<=p)
-            {
-                temp[pos] = arr[p1];
-                p1++;
-            }
-            else
-            {
-                temp[pos] = arr[p2];
-                p2++;
-            }
-            pos++;
-        }
-        pos = 0;
-        while(pos<high-low+1)
-        {
-            arr[low+pos] = temp[pos];
-            pos++;
-        }
+        int pivot = partition(arr,low,high);
+        quickSort(arr,low,pivot-1);
+        quickSort(arr,pivot+1,high);
     }
     
     public:
     int partition (int arr[], int low, int high)
     {
-       // Your code here
-       int p = low + (high-low)/2;
-       return p;
+        // Your code here
+        int l = low, r = high;
+        for(int i=l; i<r; i++)
+        {
+            if(arr[i]>=arr[r]) continue;
+            swap(arr[i],arr[l]);
+            l++;
+        }
+        swap(arr[l],arr[r]);
+        return l;
     }
 };
 
