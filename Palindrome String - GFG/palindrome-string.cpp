@@ -13,10 +13,14 @@ public:
 	int isPalindrome(string S)
 	{
 	    // Your code goes here
-	    string s = S;
-	    reverse(s.begin(),s.end());
-	    if(s==S) return 1;
-	    return 0;
+	    int l = 0, r = S.length()-1;
+	    while(l<r)
+	    {
+	        if(S[l]!=S[r]) return false;
+	        l++;
+	        r--;
+	    }
+	    return true;
 	}
 
 };
