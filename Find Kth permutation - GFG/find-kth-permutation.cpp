@@ -11,25 +11,18 @@ using namespace std;
 class Solution
 {
 public:
-    string kthPermutation(int n, int k){
-        string h="";
-        int chk=1;
-        for(int i=1;i<=n;i++){
-            h+=to_string(i);
-            chk*=i;
+    string kthPermutation(int n, int k)
+    {
+        // code here
+        string s = "";
+        for(int i=1; i<=n; i++) s += '0'+i;
+        int c = 1;
+        while(c<k)
+        {
+            next_permutation(s.begin(),s.end());
+            c++;
         }
-        string ans="";
-        int i=0,g=0,r=0;
-        while(i<n){
-           r=chk/(n-i),g=k/r;
-           if(k%r==0) g--;
-           ans+=h[g];
-           h.erase(h.begin()+g);
-           k=k-(r)*(g);
-           i++;
-           chk=r;
-        }
-        return ans;
+        return s;
     }
 };
 
