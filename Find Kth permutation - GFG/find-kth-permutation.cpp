@@ -14,13 +14,20 @@ public:
     string kthPermutation(int n, int k)
     {
         // code here
-        string s = "";
-        for(int i=1; i<=n; i++) s += '0'+i;
-        int c = 1;
-        while(c<k)
+        string s(n,' ');
+        vector<int> fac(10);
+        fac[0] = fac[1] = 1;
+        for(int i=2; i<n; i++) fac[i] = fac[i-1]*i;
+        set<int> st;
+        for(int i=1; i<=n; i++) st.insert(i);
+        k--;
+        for(int i=0; i<n; i++)
         {
-            next_permutation(s.begin(),s.end());
-            c++;
+            int pos = k / fac[n-i-1];
+            int val = *next(st.begin(),pos);
+            s[i] = '0' + val;
+            st.erase(val);
+            k = k%fac[n-i-1];
         }
         return s;
     }
