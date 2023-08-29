@@ -45,34 +45,50 @@ struct Node
 */
 class Solution
 {
+    Node* reverse(Node* head)
+    {
+        Node* prev = NULL;
+        while(head)
+        {
+            Node* t = head->next;
+            head->next = prev;
+            prev = head;
+            head = t;
+        }
+        return prev;
+    }
+    void print(Node* head)
+    {
+        while(head)
+        {
+            cout<<head->data<<"->";
+            head = head->next;
+        }
+        cout<<"END"<<endl;
+    }
     public:
     Node *compute(Node *head)
     {
         // your code goes here
-        stack<Node*> st;
+        head = reverse(head);
+        int val = INT_MIN;
+        Node* prev = NULL;
+        Node* org = head;
         while(head)
         {
-            if(st.empty()||st.top()->data>=head->data)
+            if(head->data<val)
             {
-                st.push(head);
-                head = head->next;
+                Node* t = head;
+                prev->next = head->next;
+                head = prev;
+                delete t;
             }
-            else
-            {
-                Node* n = st.top();
-                st.pop();
-                delete n;
-            }
+            val = max(val,head->data);
+            prev = head;
+            head = head->next;
         }
-        vector<Node*> vec;
-        while(!st.empty())
-        {
-            vec.push_back(st.top());
-            st.pop();
-        }
-        for(int i=vec.size()-1; i>=0; i--) vec[i]->next = vec[i-1];
-        vec[0]->next = NULL;
-        return vec.back();
+        org = reverse(org);
+        return org;
     }
     
 };
