@@ -6,13 +6,13 @@ using namespace std;
 
 class Solution 
 {
-    void traverse(int x, vector<int> adj[], vector<bool>& vis)
+    void dfs(int n, vector<int> adj[], vector<bool>& vis)
     {
-        vis[x] = true;
-        for(auto& e : adj[x])
+        vis[n] = true;
+        for(auto& x : adj[n])
         {
-            if(vis[e]) continue;
-            traverse(e,adj,vis);
+            if(vis[x]) continue;
+            dfs(x,adj,vis);
         }
     }
     public:
@@ -21,18 +21,18 @@ class Solution
 	{
 	    // Code here
 	    vector<bool> vis(V,false);
-	    int ans = 0;
+	    int prev = 0;
 	    for(int i=0; i<V; i++)
 	    {
 	        if(vis[i]) continue;
-	        ans = i;
-	        traverse(i,adj,vis);
+	        dfs(i,adj,vis);
+	        prev = i;
 	    }
-	    for(int i=0; i<V; i++) vis[i] = false;
-	    traverse(ans,adj,vis);
+	    vis = vector<bool>(V,false);
+	    dfs(prev,adj,vis);
 	    for(int i=0; i<V; i++)
 	    if(!vis[i]) return -1;
-	    return ans;
+	    return prev;
 	}
 
 };
