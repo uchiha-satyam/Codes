@@ -108,20 +108,20 @@ struct Node
 */
 
 class Solution{
-    void get(Node* root, vector<int>& v)
+    void traverse(Node* root, vector<int>& vec)
     {
         if(root==NULL) return;
-        v.push_back(root->data);
-        get(root->left,v);
-        get(root->right,v);
+        vec.push_back(root->data);
+        traverse(root->left,vec);
+        traverse(root->right,vec);
     }
-    void set(Node* root, int& i, vector<int>& v)
+    void change(Node* root, vector<int>& vec, int& i)
     {
         if(root==NULL) return;
-        set(root->left,i,v);
-        root->data = v[i];
+        change(root->left,vec,i);
+        root->data = vec[i];
         i++;
-        set(root->right,i,v);
+        change(root->right,vec,i);
     }
   public:
     // The given root is the root of the Binary Tree
@@ -129,11 +129,11 @@ class Solution{
     Node *binaryTreeToBST (Node *root)
     {
         //Your code goes here
-        vector<int> v;
-        int p = 0;
-        get(root,v);
-        sort(v.begin(),v.end());
-        set(root,p,v);
+        vector<int> vec;
+        traverse(root,vec);
+        sort(vec.begin(),vec.end());
+        int i = 0;
+        change(root,vec,i);
         return root;
     }
 };
