@@ -101,12 +101,13 @@ class Solution
     {
         //Your code here
         if(root==NULL) return -1;
-        int v = kthLargest(root->right,K);
-        if(v!=-1) return v;
+        int r = kthLargest(root->right,K);
+        if(r!=-1) return r;
         if(K==1) return root->data;
-        --K;
-        v = kthLargest(root->left,K);
-        if(v!=-1) return v;
+        K--;
+        int l = kthLargest(root->left,K);
+        if(l!=-1) return l;
+        return -1;
     }
 };
 
