@@ -19,36 +19,16 @@ struct Node {
 //Function to find the lowest common ancestor in a BST.
 class Solution{
     public:
-        bool help(Node* root, int& n1, int& n2, Node*& ans)
-        {
-            if(root==NULL) return false;
-            bool b1 = help(root->left,n1,n2,ans);
-            bool b2 = help(root->right,n1,n2,ans);
-            if(ans) return true;
-            // cout<<root->data<<" "<<b1<<" "<<b2<<" "<<ans<<endl;
-            if(b1&&b2)
-            {
-                ans = root;
-                return true;
-            }
-            else if(b1||b2)
-            {
-                if(root->data==n1||root->data==n2)
-                    ans = root;
-                return true;
-            }
-            else if(root->data==n1||root->data==n2)
-                return true;
-            else
-                return false;
-        }
-        Node* LCA(Node *root, int& n1, int& n2)
+        Node* LCA(Node *root, int n1, int n2)
         {
             // code here
-            Node* ans = NULL;
-            help(root,n1,n2,ans);
-            return ans;
+            if(root==NULL) return NULL;
+            if(root->data==n1 || root->data==n2) return root;
+            if((n1<root->data && n2>root->data) || (n1>root->data && n2<root->data)) return root;
+            if(n1<root->data) return LCA(root->left,n1,n2);
+            return LCA(root->right,n1,n2);
         }
+
 };
 
 
