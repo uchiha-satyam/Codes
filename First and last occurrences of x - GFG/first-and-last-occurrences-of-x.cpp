@@ -3,26 +3,46 @@
 using namespace std;
 
 // } Driver Code Ends
-vector<int> find(int arr[], int n , int x )
+class Solution
 {
-    // code here
-    vector<int> pos;
-    for(int i=0; i<n; i++)
+    public:
+    vector<int> find(int a[], int n , int x )
     {
-        if(arr[i]==x)
-        {
-            if(pos.empty()||pos.size()==1) pos.push_back(i);
-            else pos.back() = i;
+        // code here
+        int s=0,e=n-1,pos1=-1,pos2=-1;
+        while(s<=e){
+            int mid=(s+e)/2;
+            if(a[mid]==x){
+                 pos1=mid;
+                e=mid-1;
+            }
+            else if(a[mid]>x){
+                e=mid-1;
+            }
+            else{
+                s=mid+1;
+            }
         }
+        s=0,e=n-1;
+         while(s<=e){
+            int mid=(s+e)/2;
+            if(a[mid]==x){
+                pos2=mid;
+                s=mid+1;
+            }
+            else if(a[mid]>x){
+                e=mid-1;
+            }
+            else{
+                s=mid+1;
+            }
+        }
+        vector<int> ans;
+        ans.push_back(pos1);
+        ans.push_back(pos2);
+        return ans;
     }
-    if(pos.size()==1) pos.push_back(pos.back());
-    if(pos.empty())
-    {
-        pos.push_back(-1);
-        pos.push_back(-1);
-    }
-    return pos;
-}
+};
 
 //{ Driver Code Starts.
 
@@ -38,7 +58,8 @@ int main()
         for(i=0;i<n;i++)
         cin>>arr[i];
         vector<int> ans;
-        ans=find(arr,n,x);
+        Solution ob;
+        ans=ob.find(arr,n,x);
         cout<<ans[0]<<" "<<ans[1]<<endl;
     }
     return 0;
