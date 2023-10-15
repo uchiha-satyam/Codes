@@ -15,6 +15,47 @@ struct Node
 	}
 };
 
+
+// } Driver Code Ends
+/*Structure of the Node of the BST is as
+struct Node
+{
+	int data;
+	Node* left, *right;
+};
+*/
+
+class Solution{
+    void traverse(Node* root, vector<Node*>& vec)
+    {
+        if(!root) return;
+        traverse(root->left,vec);
+        vec.push_back(root);
+        traverse(root->right,vec);
+    }
+    Node* traverse(vector<Node*>& vec, int l, int r)
+    {
+        if(l>r) return NULL;
+        int m = l + (r-l+1)/2;
+        vec[m]->left = traverse(vec,l,m-1);
+        vec[m]->right = traverse(vec,m+1,r);
+        return vec[m];
+    }
+    public:
+    // Your are required to complete this function
+    // function should return root of the modified BST
+    Node* buildBalancedTree(Node* root)
+    {
+    	// Code here
+    	vector<Node*> vec;
+    	traverse(root,vec);
+    	return traverse(vec,0,vec.size()-1);
+    }
+};
+
+
+//{ Driver Code Starts.
+
 Node* insert(struct Node* node, int key){
 	if (node == NULL) return new Node(key);
 	if (key < node->data)
@@ -34,15 +75,14 @@ void preOrder(Node* node)
 
 int height(struct Node* node) 
 {
-  if (node==NULL) return 0;
-  else
-  {
-      int lDepth = height(node->left);
-      int rDepth = height(node->right);
-      if (lDepth > rDepth) return(lDepth+1);
-      else return(rDepth+1);
-  }
-return 2;
+  if (node==NULL) 
+    return 0;
+  int lDepth = height(node->left);
+  int rDepth = height(node->right);
+  if (lDepth > rDepth) 
+    return(lDepth+1);
+  else 
+    return(rDepth+1);
 } 
 Node *buildTree(string str) {
     // Corner Case
@@ -121,51 +161,11 @@ int main()
         getline(cin,tree);
         root = buildTree(tree);
         // cout<<height(root)<<endl;
-        root = buildBalancedTree(root);
+        Solution obj;
+        root = obj.buildBalancedTree(root);
         cout<<height(root)<<endl;
     }
 	return 0;
 }
 
 // } Driver Code Ends
-
-
-/*Structure of the Node of the BST is as
-struct Node
-{
-	int data;
-	Node* left, *right;
-};
-*/
-// Your are required to complete this function
-// function should return root of the modified BST
-void getElements(Node* root, vector<Node*>& v)
-{
-    if(root==NULL) return;
-    getElements(root->left,v);
-    v.push_back(root);
-    getElements(root->right,v);
-}
-Node* putElements(vector<Node*>& v, int s, int e)
-{
-    if(s>e) return NULL;
-    int mid = s + (e-s)/2;
-    Node* l = putElements(v,s,mid-1);
-    Node* r = putElements(v,mid+1,e);
-    v[mid]->left = l;
-    v[mid]->right = r;
-    return v[mid];
-}
-Node* buildBalancedTree(Node* root)
-{
-    // Code here
-    vector<Node*> v;
-    getElements(root,v);
-    for(auto& x : v)
-    {
-        x->left = NULL;
-        x->right = NULL;
-    }
-    root = putElements(v,0,v.size()-1);
-    return root;
-}
