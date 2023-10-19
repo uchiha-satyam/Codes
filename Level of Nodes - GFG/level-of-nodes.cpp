@@ -6,44 +6,35 @@ using namespace std;
 
 class Solution
 {
-	public:
-	//Function to find the level of node X.
-	int nodeLevel(int V, vector<int> adj[], int X) 
-	{
-	    // code here
-	    vector<bool> vis(V,false);
-	    queue<int> q;
-	    bool flag = false;
-	    int c = 0;
-	    q.push(0);
-	    q.push(-1);
-	    while(!q.empty())
-	    {
-	        int n = q.front();
-	        q.pop();
-	        if(n==-1)
-	        {
-	            if(q.empty()) break;
-	            q.push(-1);
-	            c++;
-	            continue;
-	        }
-	        if(vis[n]) continue;
-	        if(n==X)
-	        {
-	            flag = true;
-	            break;
-	        }
-	        vis[n] = true;
-	        for(auto& x : adj[n])
-	        {
-	            if(vis[x]) continue;
-	            q.push(x);
-	        }
-	    }
-	    if(flag) return c;
-	    return -1;
-	}
+    public:
+    //Function to find the level of node X.
+    int nodeLevel(int V, vector<int> adj[], int X) 
+    {
+        // code here
+        vector<bool> visited(V,false);
+        queue<int> q;
+        q.push(0);
+        q.push(-1);
+        int level = 0;
+        while(!q.empty())
+        {
+            int n = q.front();
+            q.pop();
+            if(n==-1)
+            {
+                if(q.empty()) break;
+                level++;
+                q.push(-1);
+                continue;
+            }
+            if(visited[n]) continue;
+            visited[n] = true;
+            if(n==X) return level;
+            for(auto& e : adj[n])
+            q.push(e);
+        }
+        return -1;
+    }
 };
 
 //{ Driver Code Starts.
